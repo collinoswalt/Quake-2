@@ -192,6 +192,7 @@ void GL_SetDefaultState( void )
 	qglShadeModel (GL_FLAT);
 
 	GL_TextureMode( gl_texturemode->string );
+	printf(gl_texturemode->string);
 	GL_TextureAlphaMode( gl_texturealphamode->string );
 	GL_TextureSolidMode( gl_texturesolidmode->string );
 

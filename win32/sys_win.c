@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 #include "../win32/conproc.h"
+#include <windows.h>
 
 #define MINIMUM_WIN_MEMORY	0x0a00000
 #define MAXIMUM_WIN_MEMORY	0x1000000
@@ -596,6 +597,20 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
     MSG				msg;
 	int				time, oldtime, newtime;
 	char			*cddir;
+	HWND			consoleHandle = NULL;
+
+	const char*		Title = "Quake 2 Debug";
+
+	SetConsoleTitle( Title );
+
+	/*Collin's Debugging Console*/
+	AllocConsole();
+	freopen("conin$","r",stdin);
+	freopen("conout$","w",stdout);
+	freopen("conout$","w",stderr);
+	consoleHandle = FindWindow(NULL, Title);
+	MoveWindow(consoleHandle,1,1,680,480,1);
+	printf("[sys_win.c] Console initialized.\n");
 
     /* previous instances do not exist in Win32 */
     if (hPrevInstance)

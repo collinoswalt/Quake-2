@@ -747,6 +747,7 @@ static WSADATA		winsockdata;
 NET_Init
 ====================
 */
+/**Open sockets for the server*/
 void NET_Init (void)
 {
 	WORD	wVersionRequested; 

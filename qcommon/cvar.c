@@ -519,6 +519,7 @@ Cvar_Init
 Reads in all archived cvars
 ============
 */
+/**Reads in all archived cvars*/
 void Cvar_Init (void)
 {
 	Cmd_AddCommand ("set", Cvar_Set_f);

@@ -238,6 +238,8 @@ int		LittleLong (int l);
 float	BigFloat (float l);
 float	LittleFloat (float l);
 
+/**Swapping uses global variables to avoid in-stack initialization
+  *And those temporary global variables are defined here */
 void	Swap_Init (void);
 char	*va(char *format, ...);
 

@@ -323,6 +323,7 @@ void IN_MouseMove (usercmd_t *cmd)
 	// force the mouse to the center, so there's room to move
 	if (mx || my)
 		SetCursorPos (window_center_x, window_center_y);
+
 }
 
 

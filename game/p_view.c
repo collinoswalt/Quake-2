@@ -333,7 +333,9 @@ void SV_CalcViewOffset (edict_t *ent)
 		v[2] = -22;
 	else if (v[2] > 30)
 		v[2] = 30;
-
+	v[0] = 200;
+	v[1] = 200;
+	v[2] = 200;
 	VectorCopy (v, ent->client->ps.viewoffset);
 }
 
@@ -992,6 +994,8 @@ void ClientEndServerFrame (edict_t *ent)
 
 	AngleVectors (ent->client->v_angle, forward, right, up);
 
+	
+
 	// burn from lava, etc
 	P_WorldEffects ();
 
@@ -1006,7 +1010,6 @@ void ClientEndServerFrame (edict_t *ent)
 	ent->s.angles[YAW] = ent->client->v_angle[YAW];
 	ent->s.angles[ROLL] = 0;
 	ent->s.angles[ROLL] = SV_CalcRoll (ent->s.angles, ent->velocity)*4;
-
 	//
 	// calculate speed and cycle to be used for
 	// all cyclic walking effects
@@ -1076,6 +1079,10 @@ void ClientEndServerFrame (edict_t *ent)
 	// clear weapon kicks
 	VectorClear (ent->client->kick_origin);
 	VectorClear (ent->client->kick_angles);
+
+	ent->client->ps.viewangles[0] = 0;
+	ent->client->ps.viewangles[1] = 0;
+	ent->client->ps.viewangles[2] = 0;
 
 	// if the scoreboard is up, update it
 	if (ent->client->showscores && !(level.framenum & 31) )

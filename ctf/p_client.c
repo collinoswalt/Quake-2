@@ -1497,6 +1497,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	int		i, j;
 	pmove_t	pm;
 
+
 	level.current_entity = ent;
 	client = ent->client;
 
@@ -1572,6 +1573,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	client->resp.cmd_angles[0] = SHORT2ANGLE(ucmd->angles[0]);
 	client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 	client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
+
 
 	if (ent->groundentity && !pm.groundentity && (pm.cmd.upmove >= 10) && (pm.waterlevel == 0))
 	{

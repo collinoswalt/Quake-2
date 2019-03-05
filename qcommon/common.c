@@ -872,7 +872,7 @@ void MSG_ReadData (sizebuf_t *msg_read, void *data, int len)
 
 
 //===========================================================================
-
+/**Initializes a buffer with the requested data at a max length*/
 void SZ_Init (sizebuf_t *buf, byte *data, int length)
 {
 	memset (buf, 0, sizeof(*buf));
@@ -981,16 +981,18 @@ void COM_ClearArgv (int arg)
 COM_InitArgv
 ================
 */
+/**Sets the global com_argc and com_argv variables to have copies on the
+  *Program's arguments*/
 void COM_InitArgv (int argc, char **argv)
 {
 	int		i;
 
-	if (argc > MAX_NUM_ARGVS)
+	if (argc > MAX_NUM_ARGVS) //50 here, 128 in Windows
 		Com_Error (ERR_FATAL, "argc > MAX_NUM_ARGVS");
 	com_argc = argc;
 	for (i=0 ; i<argc ; i++)
 	{
-		if (!argv[i] || strlen(argv[i]) >= MAX_TOKEN_CHARS )
+		if (!argv[i] || strlen(argv[i]) >= MAX_TOKEN_CHARS ) //128 characters, defined by the game (gamex86.dll)
 			com_argv[i] = "";
 		else
 			com_argv[i] = argv[i];
@@ -1093,7 +1095,7 @@ just cleared malloc with counters now...
 
 #define	Z_MAGIC		0x1d1d
 
-
+/**Linked list for dynamic allocation header*/
 typedef struct zhead_s
 {
 	struct zhead_s	*prev, *next;
@@ -1102,6 +1104,7 @@ typedef struct zhead_s
 	int		size;
 } zhead_t;
 
+/**Pointer to te beginning of the allocated memory chain*/
 zhead_t		z_chain;
 int		z_count, z_bytes;
 
@@ -1110,6 +1113,7 @@ int		z_count, z_bytes;
 Z_Free
 ========================
 */
+/*Frees dynamically allocated memory*/
 void Z_Free (void *ptr)
 {
 	zhead_t	*z;
@@ -1395,25 +1399,34 @@ void Com_Error_f (void)
 Qcommon_Init
 =================
 */
+/**Initializes a lot of common resources*/
 void Qcommon_Init (int argc, char **argv)
 {
 	char	*s;
 
+
 	if (setjmp (abortframe) )
 		Sys_Error ("Error during initialization");
 
+	/*Set the allocated memort variables to the head.*/
 	z_chain.next = z_chain.prev = &z_chain;
 
 	// prepare enough of the subsystems to handle
 	// cvar and command buffer management
 	COM_InitArgv (argc, argv);
 
+	//Initialize swap based on endianness
 	Swap_Init ();
+	//Initialize character buffer for command text
 	Cbuf_Init ();
 
+	//Add commands to console
 	Cmd_Init ();
+	//Add Cvars to the console
 	Cvar_Init ();
 
+
+	//Initialize console keyset and characterset
 	Key_Init ();
 
 	// we need to add the early commands twice, because
@@ -1421,22 +1434,29 @@ void Qcommon_Init (int argc, char **argv)
 	// config files, but we want other parms to override
 	// the settings of the config files
 	Cbuf_AddEarlyCommands (false);
+	//Execute all commands in the Command Buffer
 	Cbuf_Execute ();
 
+	//Initialize Filesystem
 	FS_InitFilesystem ();
 
+	//Execute config scripts
 	Cbuf_AddText ("exec default.cfg\n");
 	Cbuf_AddText ("exec config.cfg\n");
 
+	//Re-add early commands to override config scripts.
+	//See above comment on this command
 	Cbuf_AddEarlyCommands (true);
+	//Execute with server config and default config along
+	//with overridden commands
 	Cbuf_Execute ();
 
-	//
-	// init commands and vars
-	//
+	//Shows memory allocation stats
     Cmd_AddCommand ("z_stats", Z_Stats_f);
+	//Kills game with a windows error message
     Cmd_AddCommand ("error", Com_Error_f);
 
+	//Important CVars
 	host_speeds = Cvar_Get ("host_speeds", "0", 0);
 	log_stats = Cvar_Get ("log_stats", "0", 0);
 	developer = Cvar_Get ("developer", "0", 0);
@@ -1450,15 +1470,19 @@ void Qcommon_Init (int argc, char **argv)
 	dedicated = Cvar_Get ("dedicated", "0", CVAR_NOSET);
 #endif
 
+	//Version string
 	s = va("%4.2f %s %s %s", VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get ("version", s, CVAR_SERVERINFO|CVAR_NOSET);
-
+	printf(s);
 
 	if (dedicated->value)
 		Cmd_AddCommand ("quit", Com_Quit);
 
+	//Get a bunch of operating system information that probably
+	//doesn't really matter anymore (2019)
 	Sys_Init ();
 
+	//Initialize network sockets
 	NET_Init ();
 	Netchan_Init ();
 

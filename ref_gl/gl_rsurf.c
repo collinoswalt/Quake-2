@@ -1368,8 +1368,8 @@ static void LM_UploadBlock( qboolean dynamic )
 	}
 
 	GL_Bind( gl_state.lightmap_textures + texture );
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	if ( dynamic )
 	{
@@ -1635,8 +1635,8 @@ void GL_BeginBuildingLightmaps (model_t *m)
 	** initialize the dynamic lightmap texture
 	*/
 	GL_Bind( gl_state.lightmap_textures + 0 );
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	qglTexImage2D( GL_TEXTURE_2D, 
 				   0, 
 				   gl_lms.internal_format,

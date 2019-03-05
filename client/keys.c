@@ -642,6 +642,7 @@ void Key_Bindlist_f (void)
 Key_Init
 ===================
 */
+/**Initializes keyset and character set for the console*/
 void Key_Init (void)
 {
 	int		i;

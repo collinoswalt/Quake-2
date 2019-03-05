@@ -838,6 +838,9 @@ char *FS_NextPath (char *prevpath)
 FS_InitFilesystem
 ================
 */
+/**Sets the base directory, cddirectory, and game directory. Default game directory is baseq2
+  *Unless the `game` cvar specifies otherwise.
+  *Also initializes directory-related console commands*/
 void FS_InitFilesystem (void)
 {
 	Cmd_AddCommand ("path", FS_Path_f);

@@ -72,9 +72,10 @@ byte		defer_text_buf[8192];
 
 /*
 ============
-Cbuf_Init
+Cbuf_Init 
 ============
 */
+/**Initializes a character buffer for the Console Command text*/
 void Cbuf_Init (void)
 {
 	SZ_Init (&cmd_text, cmd_text_buf, sizeof(cmd_text_buf));
@@ -191,6 +192,7 @@ void Cbuf_ExecuteText (int exec_when, char *text)
 Cbuf_Execute
 ============
 */
+/**Execute all commands in the Command buffer, delineated by ;*/
 void Cbuf_Execute (void)
 {
 	int		i;
@@ -878,6 +880,7 @@ void Cmd_List_f (void)
 Cmd_Init
 ============
 */
+/**Adds all the native commands to the console*/
 void Cmd_Init (void)
 {
 //

@@ -41,8 +41,8 @@ int		gl_alpha_format = 4;
 int		gl_tex_solid_format = 3;
 int		gl_tex_alpha_format = 4;
 
-int		gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
-int		gl_filter_max = GL_LINEAR;
+int		gl_filter_min = GL_NEAREST_MIPMAP_NEAREST;
+int		gl_filter_max = GL_NEAREST;
 
 void GL_SetTexturePalette( unsigned palette[256] )
 {
@@ -158,11 +158,11 @@ typedef struct
 
 glmode_t modes[] = {
 	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
-	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
+	{"GL_LINEAR", GL_NEAREST, GL_NEAREST},
 	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
+	{"GL_LINEAR_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
+	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
+	{"GL_LINEAR_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST}
 };
 
 #define NUM_GL_MODES (sizeof(modes) / sizeof (glmode_t))

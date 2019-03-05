@@ -826,10 +826,10 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 	VectorAdd (offset, g_offset, offset);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 
-	VectorScale (forward, -2, ent->client->kick_origin);
+	VectorScale (forward, -100, ent->client->kick_origin);
 	ent->client->kick_angles[0] = -1;
 
-	fire_blaster (ent, start, forward, damage, 1000, effect, hyper);
+	fire_blaster (ent, start, forward, damage, 200, effect, hyper);
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -851,7 +851,7 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	if (deathmatch->value)
 		damage = 15;
 	else
-		damage = 10;
+		damage = 500;
 	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
 }

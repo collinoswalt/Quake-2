@@ -1655,7 +1655,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			PlayerNoise(ent, ent->s.origin, PNOISE_SELF);
 		}
 
-		ent->viewheight = pm.viewheight;
+		ent->viewheight = 0;//pm.viewheight;
 		ent->waterlevel = pm.waterlevel;
 		ent->watertype = pm.watertype;
 		ent->groundentity = pm.groundentity;
@@ -1673,6 +1673,10 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			VectorCopy (pm.viewangles, client->v_angle);
 			VectorCopy (pm.viewangles, client->ps.viewangles);
 		}
+
+		client->ps.viewangles[0] = 180;
+		client->ps.viewangles[1] = 180;
+		client->ps.viewangles[2] = client->killer_yaw;
 
 		gi.linkentity (ent);
 
@@ -1741,6 +1745,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		if (other->inuse && other->client->chase_target == ent)
 			UpdateChaseCam(other);
 	}
+
 }
 
 

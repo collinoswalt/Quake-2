@@ -942,6 +942,7 @@ SV_Init
 Only called at quake2.exe startup, not for each game
 ===============
 */
+/**Initialize server. Sets a bunch of variables for the game. Runs once at server startup*/
 void SV_Init (void)
 {
 	SV_InitOperatorCommands	();
@@ -977,6 +978,7 @@ void SV_Init (void)
 
 	sv_reconnect_limit = Cvar_Get ("sv_reconnect_limit", "3", CVAR_ARCHIVE);
 
+	//Initialize net_message. net_message_buffer is a byte array of length MAX_MSGLEN
 	SZ_Init (&net_message, net_message_buffer, sizeof(net_message_buffer));
 }
 
